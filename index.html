@@ -96,5 +96,35 @@
       <p><strong>Estimated Total:</strong> KES 0</p>
       <p><strong>Estimated Time:</strong> 0 mins</p>
     </div>
+    <script>
+      const services = [
+        { name: "Individual Lashes — Classic (Cat Eye / Wispy)", price: 1200, mins: 90 },
+        { name: "Individual Lashes — Hybrid (Cat Eye / Wispy)", price: 1500, mins: 110 },
+        { name: "Cluster Lashes", price: 800, mins: 45 },
+        { name: "Brow Shaping & Tinting", price: 600, mins: 40 }
+      ];
+
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      const summaryParagraphs = document.querySelectorAll('div:last-of-type p');
+
+      function updateEstimate() {
+        let totalPrice = 0;
+        let totalMins = 0;
+
+        checkboxes.forEach((box, index) => {
+          if (box.checked && services[index]) {
+            totalPrice += services[index].price;
+            totalMins += services[index].mins;
+          }
+        });
+
+        summaryParagraphs[0].innerHTML = `<strong>Estimated Total:</strong> KES ${totalPrice.toLocaleString()}`;
+        summaryParagraphs[1].innerHTML = `<strong>Estimated Time:</strong> ${totalMins} mins`;
+      }
+
+      checkboxes.forEach((box) => {
+        box.addEventListener("change", updateEstimate);
+      });
+    </script>
   </body>
 </html>
