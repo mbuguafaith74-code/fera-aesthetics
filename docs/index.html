@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fera Aesthetics | Service & Booking Estimator</title>
+  <style>
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      background-color: #f4d9d5;
+      background-image:
+        radial-gradient(circle at 50% 12%, #fffcfc 0%, #f9e6e4 42%, #edd0cc 78%, #e2bcb6 100%);
+      background-attachment: fixed;
+      color: #3b1d22;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 28px 20px 40px;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+
+    header {
+      text-align: center;
+      border: 1px solid rgba(197, 140, 126, 0.65);
+      outline: 1px solid rgba(197, 140, 126, 0.3);
+      outline-offset: -6px;
+      border-radius: 18px;
+      padding: 24px 18px;
+      background: rgba(255, 252, 251, 0.62);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 12px 28px rgba(92, 46, 50, 0.08);
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      color: #3b1d22;
+      letter-spacing: 4px;
+      font-size: 28px;
+      margin: 0 0 4px 0;
+      font-weight: normal;
+    }
+
+    .subtitle {
+      color: #a66c5e;
+      letter-spacing: 3px;
+      font-size: 13px;
+      margin: 0 0 10px 0;
+      text-transform: uppercase;
+    }
+
+    .tagline {
+      color: #7d4e46;
+      font-size: 11px;
+      letter-spacing: 2px;
+      border-top: 1px solid rgba(217, 171, 160, 0.7);
+      padding-top: 8px;
+      margin: 0;
+    }
+
+    .location {
+      font-size: 12px;
+      color: #6e4742;
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    h2 {
+      color: #3b1d22;
+      font-size: 18px;
+      font-weight: normal;
+      margin-bottom: 4px;
+    }
+
+    .hint {
+      font-size: 13px;
+      color: #7d4e46;
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+
+    .category-title {
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #9c6154;
+      margin: 20px 0 8px 0;
+    }
+
+    label.service-card, .charm-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: rgba(255, 252, 251, 0.58);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(214, 164, 152, 0.65);
+      border-radius: 14px;
+      padding: 13px 14px;
+      margin-bottom: 10px;
+      box-shadow: 0 6px 16px rgba(92, 46, 50, 0.06);
+      cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    label.service-card:has(input:checked) {
+      background: rgba(255, 252, 251, 0.88);
+      border-color: #b57b6d;
+    }
+
+    .service-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    input[type="checkbox"] {
+      accent-color: #a66c5e;
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .service-info {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .service-name {
+      font-size: 15px;
+      color: #3b1d22;
+    }
+
+    .service-meta {
+      font-size: 13px;
+      color: #9c6154;
+    }
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .qty-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid rgba(181, 123, 109, 0.75);
+      background-color: rgba(255, 252, 251, 0.8);
+      color: #3b1d22;
+      font-size: 16px;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+    }
+
+    #charm-count {
+      min-width: 18px;
+      text-align: center;
+      font-size: 15px;
+    }
+
+    .summary-box {
+      margin-top: 22px;
+      background: rgba(255, 252, 251, 0.72);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1.5px solid rgba(197, 140, 126, 0.8);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 10px 24px rgba(92, 46, 50, 0.08);
+    }
+
+    .summary-box p {
+      margin: 6px 0;
+      font-size: 16px;
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .whatsapp-btn {
+      flex: 1;
+      min-width: 170px;
+      background-color: #3b1d22;
+      border: 1px solid #3b1d22;
+      color: #fffcfc;
+      font-family: inherit;
+      font-size: 14px;
+      padding: 10px 16px;
+      border-radius: 9px;
+      cursor: pointer;
+    }
+
+    .reset-btn {
+      background-color: rgba(255, 252, 251, 0.65);
+      border: 1px solid #b57b6d;
+      color: #3b1d22;
+      font-family: inherit;
+      font-size: 13px;
+      padding: 10px 14px;
+      border-radius: 9px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>FERA</h1>
+    <p class="subtitle">Aesthetics</p>
+    <p class="tagline">LASHES &bull; BROWS &bull; CURATED</p>
+    <p class="location">Mobile &amp; Booking-Only Beauty Services &bull; Ruiru, Kihunguro</p>
+  </header>
+
+  <h2>Select Your Services</h2>
+  <p class="hint">Choose your treatments below to estimate your total and appointment time.</p>
+
+  <p class="category-title">Cluster Lashes</p>
+  <label class="service-card">
+    <div class="service-left">
+      <input type="checkbox" data-name="Cluster Lashes" data-price="350" data-mins="30">
+      <div class="service-info">
+        <span class="service-name">Cluster Lashes</span>
+        <span class="service-meta">KES 350 &bull; 30 mins</span>
+      </div>
+    </div>
+  </label>
+
+  <p class="category-title">Individual Lashes</p>
+  <label class="service-card">
+    <div class="service-left">
+      <input type="checkbox" data-name="Classic Cat Eye Lashes" data-price="500" data-mins="60">
+      <div class="service-info">
+        <span class="service-name">Classic Cat Eye Lashes</span>
+        <span class="service-meta">KES 500 &bull; 60 mins</span>
+      </div>
+    </div>
+  </label>
+
+  <label class="service-card">
+    <div class="service-left">
+      <input type="checkbox" data-name="Hybrid Cat Eye Lashes" data-price="700" data-mins="75">
+      <div class="service-info">
+        <span class="service-name">Hybrid Cat Eye Lashes</span>
+        <span class="service-meta">KES 700 &bull; 75 mins</span>
+      </div>
+    </div>
+  </label>
+
+  <label class="service-card">
+    <div class="service-left">
+      <input type="checkbox" data-name="Classic Wispy Lashes" data-price="600" data-mins="65">
+      <div class="service-info">
+        <span class="service-name">Classic Wispy Lashes</span>
+        <span class="service-meta">KES 600 &bull; 65 mins</span>
+      </div>
+    </div>
+  </label>
+
+  <label class="service-card">
+    <div class="service-left">
+      <input type="checkbox" data-name="Hybrid Wispy Lashes" data-price="800" data-mins="80">
+      <div class="service-info">
+        <span class="service-name">Hybrid Wispy Lashes</span>
+        <span class="service-meta">KES 800 &bull; 80 mins</span>
+      </div>
+    </div>
+  </label>
+
+  <p class="category-title">Charms</p>
+  <div class="charm-card">
+    <div class="service-info">
+      <span class="service-name">Charms</span>
+      <span class="service-meta">KES 50 each &bull; +5 mins (up to 10 mins)</span>
+    </div>
+    <div class="qty-controls">
+      <button type="button" class="qty-btn" id="charm-minus">&minus;</button>
+      <span id="charm-count">0</span>
+      <button type="button" class="qty-btn" id="charm-plus">+</button>
+    </div>
+  </div>
+
+  <p class="category-title">Brows</p>
+  <label class="service-card">
+    <div class="service-left">
+      <input type="checkbox" data-name="Brow Shaping" data-price="150" data-mins="15">
+      <div class="service-info">
+        <span class="service-name">Brow Shaping</span>
+        <span class="service-meta">KES 150 &bull; 15 mins</span>
+      </div>
+    </div>
+  </label>
+
+  <label class="service-card">
+    <div class="service-left">
+      <input type="checkbox" data-name="Brow Tinting" data-price="400" data-mins="20">
+      <div class="service-info">
+        <span class="service-name">Brow Tinting</span>
+        <span class="service-meta">KES 400 &bull; 20 mins</span>
+      </div>
+    </div>
+  </label>
+
+  <div class="summary-box">
+    <p id="total-price"><strong>Estimated Total:</strong> KES 0</p>
+    <p id="total-time"><strong>Estimated Time:</strong> 0 mins</p>
+    <div class="action-row">
+      <button type="button" class="whatsapp-btn" id="whatsapp-btn">Book via WhatsApp</button>
+      <button type="button" class="reset-btn" id="reset-btn">Clear Selection</button>
+    </div>
+  </div>
+
+  <script>
+    // Replace with your WhatsApp number (country code + number, no + or spaces)
+    const WHATSAPP_NUMBER = "254700000000";
+
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const totalPriceEl = document.getElementById("total-price");
+    const totalTimeEl = document.getElementById("total-time");
+    const resetBtn = document.getElementById("reset-btn");
+    const whatsappBtn = document.getElementById("whatsapp-btn");
+    const charmCountEl = document.getElementById("charm-count");
+    let charmCount = 0;
+    const charmPrice = 50;
+
+    function getEstimateData() {
+      let totalPrice = charmCount * charmPrice;
+      let totalMins = charmCount > 0 ? Math.min(charmCount * 5, 10) : 0;
+      const selected = [];
+
+      checkboxes.forEach((box) => {
+        if (box.checked) {
+          totalPrice += Number(box.dataset.price);
+          totalMins += Number(box.dataset.mins);
+          selected.push(box.dataset.name);
+        }
+      });
+
+      if (charmCount > 0) {
+        selected.push(`Charms (${charmCount})`);
+      }
+
+      return { totalPrice, totalMins, selected };
+    }
+
+    function updateEstimate() {
+      const { totalPrice, totalMins } = getEstimateData();
+      totalPriceEl.innerHTML = `<strong>Estimated Total:</strong> KES ${totalPrice.toLocaleString()}`;
+      totalTimeEl.innerHTML = `<strong>Estimated Time:</strong> ${totalMins} mins`;
+    }
+
+    checkboxes.forEach((box) => box.addEventListener("change", updateEstimate));
+
+    document.getElementById("charm-plus").addEventListener("click", () => {
+      charmCount++;
+      charmCountEl.textContent = charmCount;
+      updateEstimate();
+    });
+
+    document.getElementById("charm-minus").addEventListener("click", () => {
+      if (charmCount > 0) {
+        charmCount--;
+        charmCountEl.textContent = charmCount;
+        updateEstimate();
+      }
+    });
+
+    resetBtn.addEventListener("click", () => {
+      checkboxes.forEach((box) => (box.checked = false));
+      charmCount = 0;
+      charmCountEl.textContent = 0;
+      updateEstimate();
+    });
+
+    whatsappBtn.addEventListener("click", () => {
+      const { totalPrice, totalMins, selected } = getEstimateData();
+      const serviceList = selected.length > 0 ? selected.join(", ") : "None selected yet";
+
+      const message =
+        `Hi Fera Aesthetics! I'd like to book an appointment:\n` +
+        `• Services: ${serviceList}\n` +
+        `• Estimated Total: KES ${totalPrice.toLocaleString()}\n` +
+        `• Estimated Time: ${totalMins} mins\n` +
+        `• Preferred Date & Time: `;
+
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.open(url, "_blank", "noopener,noreferrer");
+    });
+  </script>
+
+</body>
+</html>
