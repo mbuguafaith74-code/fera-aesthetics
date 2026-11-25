@@ -118,3 +118,13 @@
           }
         });
 
+      summaryParagraphs[0].innerHTML = `<strong>Estimated Total:</strong> KES ${totalPrice.toLocaleString()}`;
+        summaryParagraphs[1].innerHTML = `<strong>Estimated Time:</strong> ${totalMins} mins`;
+      }
+
+      checkboxes.forEach((box) => {
+        box.addEventListener("change", updateEstimate);
+      });
+    </script>
+  </body>
+</html>
