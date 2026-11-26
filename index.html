@@ -409,6 +409,26 @@
     }
   </script>
 
+    <style>
+    .client-prep-note {
+      margin: 10px 0 12px;
+      font-size: 12px;
+      line-height: 1.45;
+      color: #6f3e38;
+    }
+  </style>
+
+  <script>
+    const summaryBoxEl = document.querySelector(".summary-box");
+    const whatsappBtnEl = summaryBoxEl ? summaryBoxEl.querySelector("button, a") : null;
+    if (summaryBoxEl && whatsappBtnEl && !document.querySelector(".client-prep-note")) {
+      const prepNoteEl = document.createElement("p");
+      prepNoteEl.className = "client-prep-note";
+      prepNoteEl.textContent = "Please arrive with clean, makeup-free lashes & brows • Slots are confirmed via WhatsApp.";
+      summaryBoxEl.insertBefore(prepNoteEl, whatsappBtnEl);
+    }
+  </script>
+
 </body>
 </html>
 
