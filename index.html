@@ -489,6 +489,27 @@
     }
   </style>
 
+    <style>
+    .services-section-heading {
+      margin: 18px 0 6px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6f3e38;
+    }
+  </style>
+
+  <script>
+    const servicesContainer = document.getElementById("services");
+    if (servicesContainer && !document.querySelector(".services-section-heading")) {
+      const headingEl = document.createElement("h2");
+      headingEl.className = "services-section-heading";
+      headingEl.textContent = "Select Your Bookings & Services (With Prime Offers and Discounts)";
+      servicesContainer.parentNode.insertBefore(headingEl, servicesContainer);
+    }
+  </script>
+
 </body>
 </html>
 
