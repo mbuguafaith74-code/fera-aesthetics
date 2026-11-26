@@ -127,3 +127,85 @@
       <button type="button" class="whatsapp-btn" id="whatsapp-btn">Book via WhatsApp</button>
     </div>
   </section>
+    <style>
+    .charm-card {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      background: rgba(255, 252, 251, 0.65); border: 1px solid rgba(214, 164, 152, 0.65);
+      border-radius: 14px; padding: 13px 14px; margin-bottom: 10px;
+    }
+    .qty-controls { display: flex; align-items: center; gap: 10px; }
+    .qty-btn {
+      width: 28px; height: 28px; border-radius: 50%; border: 1px solid rgba(181, 123, 109, 0.75);
+      background-color: rgba(255, 252, 251, 0.85); color: #3b1d22; font-size: 16px; cursor: pointer;
+    }
+    #charm-count { min-width: 18px; text-align: center; font-size: 15px; }
+    .summary-box {
+      margin-top: 20px; background: rgba(255, 252, 251, 0.78);
+      border: 1.5px solid rgba(197, 140, 126, 0.85); border-radius: 16px; padding: 18px;
+    }
+    .summary-box p { margin: 6px 0; font-size: 16px; }
+    .whatsapp-btn {
+      margin-top: 12px; width: 100%; background-color: #3b1d22; border: 1px solid #3b1d22;
+      color: #fffcfc; font-family: inherit; font-size: 14px; padding: 11px 16px;
+      border-radius: 9px; cursor: pointer;
+    }
+  </style>
+
+  <script>
+    const WHATSAPP_NUMBER = "254712061010";
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const totalPriceEl = document.getElementById("total-price");
+    const totalTimeEl = document.getElementById("total-time");
+    const whatsappBtn = document.getElementById("whatsapp-btn");
+    const charmCountEl = document.getElementById("charm-count");
+    let charmCount = 0;
+
+    function getEstimateData() {
+      let totalPrice = charmCount * 50;
+      let totalMins = charmCount > 0 ? Math.min(charmCount * 5, 10) : 0;
+      const selected = [];
+      checkboxes.forEach((box) => {
+        if (box.checked) {
+          totalPrice += Number(box.dataset.price);
+          totalMins += Number(box.dataset.mins);
+          selected.push(box.dataset.name);
+        }
+      });
+      if (charmCount > 0) selected.push(`Charms (${charmCount})`);
+      return { totalPrice, totalMins, selected };
+    }
+
+    function updateEstimate() {
+      const { totalPrice, totalMins } = getEstimateData();
+      totalPriceEl.innerHTML = `<strong>Estimated Total:</strong> KES ${totalPrice.toLocaleString()}`;
+      totalTimeEl.innerHTML = `<strong>Estimated Time:</strong> ${totalMins} mins`;
+    }
+
+    checkboxes.forEach((box) => box.addEventListener("change", updateEstimate));
+    document.getElementById("charm-plus").addEventListener("click", () => {
+      charmCount++;
+      charmCountEl.textContent = charmCount;
+      updateEstimate();
+    });
+    document.getElementById("charm-minus").addEventListener("click", () => {
+      if (charmCount > 0) {
+        charmCount--;
+        charmCountEl.textContent = charmCount;
+        updateEstimate();
+      }
+    });
+
+    whatsappBtn.addEventListener("click", () => {
+      const { totalPrice, totalMins, selected } = getEstimateData();
+      const serviceList = selected.length > 0 ? selected.join(", ") : "None selected yet";
+      const message =
+        `Hi Fera Aesthetics! I'd like to book an appointment:\n` +
+        `• Services: ${serviceList}\n` +
+        `• Estimated Total: KES ${totalPrice.toLocaleString()}\n` +
+        `• Estimated Time: ${totalMins} mins\n` +
+        `• Preferred Date & Time: `;
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+    });
+  </script>
+
+  
