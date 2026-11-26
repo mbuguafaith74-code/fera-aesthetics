@@ -310,6 +310,33 @@
     });
   </script>
 
+    <style>
+    body {
+      max-width: 960px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    @media (min-width: 768px) {
+      #services {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px 16px;
+        align-items: start;
+      }
+      .category-title,
+      .summary-box {
+        grid-column: 1 / -1;
+      }
+      label.service-card,
+      .charm-card {
+        margin-bottom: 0;
+      }
+    }
+  </style>
+
 </body>
 </html>
 
