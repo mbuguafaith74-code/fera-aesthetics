@@ -389,6 +389,26 @@
     }
   </script>
 
+    <style>
+    .fera-ig-handle {
+      margin: 4px 0 14px;
+      text-align: center;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: #6f3e38;
+    }
+  </style>
+
+  <script>
+    const headerRef = document.querySelector("header");
+    if (headerRef && !document.querySelector(".fera-ig-handle")) {
+      const igEl = document.createElement("p");
+      igEl.className = "fera-ig-handle";
+      igEl.textContent = "Instagram: @feraofficial.asthetics";
+      headerRef.insertAdjacentElement("afterend", igEl);
+    }
+  </script>
+
 </body>
 </html>
 
