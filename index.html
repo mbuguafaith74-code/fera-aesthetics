@@ -370,6 +370,25 @@
     }
   </script>
 
+    <style>
+    .brand-vibe-line {
+      margin: 6px 0 0;
+      font-size: 13px;
+      font-style: italic;
+      color: #6f3e38;
+    }
+  </style>
+
+  <script>
+    const headerBox = document.querySelector("header");
+    if (headerBox && !document.querySelector(".brand-vibe-line")) {
+      const vibeEl = document.createElement("p");
+      vibeEl.className = "brand-vibe-line";
+      vibeEl.textContent = "Tailored lash & brow artistry for effortless confidence.";
+      headerBox.appendChild(vibeEl);
+    }
+  </script>
+
 </body>
 </html>
 
