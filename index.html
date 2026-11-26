@@ -772,6 +772,82 @@
       }, 200);
     })();
   </script>
+  <style>
+    .fera-ig-footer-line {
+      margin-top: 6px;
+      font-size: 12px;
+      color: #6f3e38;
+      text-align: center;
+    }
+    .fera-ig-footer-line a {
+      color: inherit;
+      text-decoration: none;
+      font-weight: 500;
+    }
+  </style>
+
+  <script>
+    (function () {
+      function movePromosAboveBooking() {
+        const promos = document.getElementById("promos-section");
+        if (!promos) return;
+
+        const whatsappBtn = Array.from(document.querySelectorAll("a, button")).find((el) =>
+          /Book via WhatsApp/i.test(el.textContent || "")
+        );
+        const totalEl = Array.from(document.querySelectorAll("*")).find(
+          (el) => el.children.length === 0 && /Estimated Total:/i.test(el.textContent || "")
+        );
+
+        const target = whatsappBtn || totalEl;
+        if (!target) return;
+
+        // Walk up until we find the card/box that holds Estimated Total + WhatsApp, not the whole page
+        let box = target;
+        while (box.parentElement && box.parentElement !== document.body) {
+          const p = box.parentElement;
+          const pText = p.textContent || "";
+          const hasBoth = /Estimated Total:/i.test(pText) && /Book via WhatsApp/i.test(pText);
+          if (hasBoth && p.children.length > 1) {
+            break;
+          }
+          box = p;
+        }
+
+        if (box && box.parentNode && promos.nextElementSibling !== box) {
+          box.parentNode.insertBefore(promos, box);
+        }
+      }
+
+      function ensureFooterInstagram() {
+        if (document.querySelector(".fera-ig-footer-line")) return;
+
+        const footerEl =
+          document.querySelector("footer") ||
+          Array.from(document.querySelectorAll("div, p, small")).find((el) =>
+            /Bookings Only/i.test(el.textContent || "")
+          );
+
+        if (!footerEl) return;
+
+        const host = footerEl.tagName === "FOOTER" ? footerEl : footerEl.parentNode;
+        if (!host || host.querySelector(".fera-ig-footer-line")) return;
+
+        const line = document.createElement("div");
+        line.className = "fera-ig-footer-line";
+        line.innerHTML =
+          'Instagram: <a href="https://instagram.com/feraofficial.asthetics" target="_blank" rel="noopener noreferrer">@feraofficial.asthetics</a>';
+        host.appendChild(line);
+      }
+
+      function applyAll() {
+        movePromosAboveBooking();
+        ensureFooterInstagram();
+      }
+
+      [0, 150, 400, 900, 1800].forEach((ms) => setTimeout(applyAll, ms));
+    })();
+  </script>
 
 </body>
 </html>
