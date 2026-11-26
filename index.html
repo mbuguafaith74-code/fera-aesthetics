@@ -510,6 +510,198 @@
     }
   </script>
 
+    <style>
+    .promos-section-heading {
+      margin: 18px 0 6px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6f3e38;
+    }
+    #promos-section .promo-card {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+      gap: 12px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      padding: 12px 14px !important;
+      margin-bottom: 10px !important;
+      border-radius: 10px !important;
+      background: rgba(255, 255, 255, 0.78) !important;
+      border: 1px solid rgba(111, 62, 56, 0.22) !important;
+      cursor: pointer !important;
+    }
+    #promos-section .promo-card input[type="checkbox"] {
+      flex: 0 0 auto !important;
+      margin: 0 !important;
+    }
+    #promos-section .promo-body {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 2px !important;
+      text-align: left !important;
+    }
+    #promos-section .promo-title {
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      color: #3d2320 !important;
+      line-height: 1.3 !important;
+    }
+    #promos-section .promo-meta {
+      font-size: 12px !important;
+      color: #6f3e38 !important;
+      line-height: 1.3 !important;
+    }
+  </style>
+
+  <script>
+    (function () {
+      const servicesEl = document.getElementById("services");
+      if (!servicesEl) return;
+
+      const existingPromos = document.getElementById("promos-section");
+      if (existingPromos) existingPromos.remove();
+
+      const promos = [
+        {
+          id: "promo-cluster-brow-shaping",
+          label: "Cluster lashes + brow shaping",
+          price: 400,
+          minutes: 45
+        },
+        {
+          id: "promo-hybrid-cat-brow-shaping",
+          label: "Individual cat eye (HYBRID) lashes + brow shaping",
+          price: 800,
+          minutes: 90
+        },
+        {
+          id: "promo-classic-wispy-brow-shaping",
+          label: "Individual wispy eye (CLASSIC) lashes + brow shaping",
+          price: 700,
+          minutes: 80
+        },
+        {
+          id: "promo-classic-cat-brow-tinting",
+          label: "Individual cat eye (CLASSIC) lashes + brow tinting",
+          price: 850,
+          minutes: 80
+        }
+      ];
+
+      const wrapper = document.createElement("div");
+      wrapper.id = "promos-section";
+
+      const heading = document.createElement("h2");
+      heading.className = "promos-section-heading";
+      heading.textContent = "Promos%";
+      wrapper.appendChild(heading);
+
+      promos.forEach((item) => {
+        const card = document.createElement("label");
+        card.className = "service-card promo-card";
+        card.htmlFor = item.id;
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.id = item.id;
+        checkbox.dataset.promoPrice = String(item.price);
+        checkbox.dataset.promoMinutes = String(item.minutes);
+        checkbox.dataset.promoLabel = item.label;
+
+        const body = document.createElement("div");
+        body.className = "promo-body";
+
+        const title = document.createElement("div");
+        title.className = "promo-title";
+        title.textContent = item.label;
+
+        const meta = document.createElement("div");
+        meta.className = "promo-meta";
+        meta.textContent = `KES ${item.price} • ${item.minutes} mins`;
+
+        body.appendChild(title);
+        body.appendChild(meta);
+        card.appendChild(checkbox);
+        card.appendChild(body);
+        wrapper.appendChild(card);
+      });
+
+      servicesEl.appendChild(wrapper);
+
+      function syncPromoTotals() {
+        let extraPrice = 0;
+        let extraMinutes = 0;
+        const selectedPromos = [];
+
+        wrapper.querySelectorAll('input[type="checkbox"]:checked').forEach((cb) => {
+          extraPrice += Number(cb.dataset.promoPrice || 0);
+          extraMinutes += Number(cb.dataset.promoMinutes || 0);
+          selectedPromos.push(`${cb.dataset.promoLabel} (KES ${cb.dataset.promoPrice})`);
+        });
+
+        const summaryTextNodes = Array.from(document.querySelectorAll("*")).filter(
+          (el) =>
+            el.children.length === 0 &&
+            /Estimated Total:|Estimated Time:/i.test(el.textContent || "")
+        );
+
+        summaryTextNodes.forEach((el) => {
+          if (/Estimated Total:/i.test(el.textContent)) {
+            if (!el.dataset.baseTotal) {
+              const match = el.textContent.match(/(\d[\d,]*)/);
+              el.dataset.baseTotal = match ? match[1].replace(/,/g, "") : "0";
+            }
+            const base = Number(el.dataset.baseTotal || 0);
+            el.textContent = `Estimated Total: KES ${(base + extraPrice).toLocaleString()}`;
+          }
+          if (/Estimated Time:/i.test(el.textContent)) {
+            if (!el.dataset.baseTime) {
+              const match = el.textContent.match(/(\d+)/);
+              el.dataset.baseTime = match ? match[1] : "0";
+            }
+            const baseMins = Number(el.dataset.baseTime || 0);
+            el.textContent = `Estimated Time: ${baseMins + extraMinutes} mins`;
+          }
+        });
+
+        document.querySelectorAll("a[href*='wa.me'], a[href*='whatsapp.com']").forEach((link) => {
+          if (!link.dataset.baseHref) {
+            link.dataset.baseHref = link.href;
+          }
+          const url = new URL(link.dataset.baseHref);
+          const currentMsg = url.searchParams.get("text") || "";
+          const cleanMsg = currentMsg.replace(/\n\nPromos:.*$/s, "");
+          if (selectedPromos.length > 0) {
+            url.searchParams.set(
+              "text",
+              `${cleanMsg}\n\nPromos: ${selectedPromos.join(", ")} (+KES ${extraPrice})`
+            );
+          } else {
+            url.searchParams.set("text", cleanMsg);
+          }
+          link.href = url.toString();
+        });
+      }
+
+      wrapper.addEventListener("change", syncPromoTotals);
+      servicesEl.addEventListener("change", (e) => {
+        if (!e.target.closest("#promos-section")) {
+          document.querySelectorAll("*").forEach((el) => {
+            if (el.children.length === 0 && /Estimated Total:|Estimated Time:/i.test(el.textContent || "")) {
+              delete el.dataset.baseTotal;
+              delete el.dataset.baseTime;
+            }
+          });
+          setTimeout(syncPromoTotals, 0);
+        }
+      });
+    })();
+  </script>
+
 </body>
 </html>
 
