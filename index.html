@@ -290,6 +290,26 @@
     summaryBox.insertBefore(timeInput, oldBtn);
   </script>
 
+  <script>
+    const freshBtn = oldBtn.cloneNode(true);
+    oldBtn.parentNode.replaceChild(freshBtn, oldBtn);
+
+    freshBtn.addEventListener("click", () => {
+      const { totalPrice, totalMins, selected } = getEstimateData();
+      const serviceList = selected.length > 0 ? selected.join(", ") : "None selected yet";
+      const preferredTime = document.getElementById("booking-time").value.trim() || "Flexible / Let's discuss";
+
+      const message =
+        `Hi Fera Aesthetics! I'd like to book an appointment:\n` +
+        `• Services: ${serviceList}\n` +
+        `• Estimated Total: KES ${totalPrice.toLocaleString()}\n` +
+        `• Estimated Time: ${totalMins} mins\n` +
+        `• Preferred Date & Time: ${preferredTime}`;
+
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+    });
+  </script>
+
 </body>
 </html>
 
