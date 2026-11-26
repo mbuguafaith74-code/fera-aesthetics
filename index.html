@@ -261,6 +261,35 @@
     Ruiru, Kihunguro &bull; Bookings Only
   </footer>
 
+
+  <style>
+    .time-label { display: block; margin: 12px 0 6px; font-size: 13px; color: #5c2a31; }
+    .time-input {
+      width: 100%; box-sizing: border-box; padding: 10px 12px;
+      border-radius: 9px; border: 1px solid rgba(181, 123, 109, 0.75);
+      background: rgba(255, 252, 251, 0.9); color: #3b1d22;
+      font-family: inherit; font-size: 14px;
+    }
+  </style>
+
+  <script>
+    const summaryBox = document.querySelector(".summary-box");
+    const oldBtn = document.getElementById("whatsapp-btn");
+
+    const timeLabel = document.createElement("label");
+    timeLabel.className = "time-label";
+    timeLabel.textContent = "Preferred Date & Time";
+
+    const timeInput = document.createElement("input");
+    timeInput.type = "text";
+    timeInput.id = "booking-time";
+    timeInput.className = "time-input";
+    timeInput.placeholder = "e.g., Saturday at 2:00 PM";
+
+    summaryBox.insertBefore(timeLabel, oldBtn);
+    summaryBox.insertBefore(timeInput, oldBtn);
+  </script>
+
 </body>
 </html>
 
