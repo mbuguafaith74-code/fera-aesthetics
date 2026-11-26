@@ -36,3 +36,58 @@
     <p class="catchphrase">Softness with an edge.</p>
     <p class="location">Mobile &amp; Booking-Only Beauty Services &bull; Ruiru, Kihunguro</p>
   </header>
+  <style>
+    .category-title { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #9c6154; margin: 22px 0 8px 0; }
+    label.service-card {
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(255, 252, 251, 0.65); border: 1px solid rgba(214, 164, 152, 0.65);
+      border-radius: 14px; padding: 13px 14px; margin-bottom: 10px; cursor: pointer;
+    }
+    input[type="checkbox"] { accent-color: #a66c5e; width: 18px; height: 18px; }
+    .service-info { display: flex; flex-direction: column; gap: 3px; }
+    .service-name { font-size: 15px; color: #3b1d22; }
+    .service-meta { font-size: 13px; color: #9c6154; }
+  </style>
+
+  <section id="services">
+    <p class="category-title">Cluster Lashes</p>
+    <label class="service-card">
+      <input type="checkbox" data-name="Cluster Lashes" data-price="350" data-mins="30">
+      <div class="service-info">
+        <span class="service-name">Cluster Lashes</span>
+        <span class="service-meta">KES 350 &bull; 30 mins</span>
+      </div>
+    </label>
+
+    <p class="category-title">Individual Lashes</p>
+    <label class="service-card">
+      <input type="checkbox" data-name="Classic Cat Eye Lashes" data-price="500" data-mins="60">
+      <div class="service-info">
+        <span class="service-name">Classic Cat Eye Lashes</span>
+        <span class="service-meta">KES 500 &bull; 60 mins</span>
+      </div>
+    </label>
+
+    <label class="service-card">
+      <input type="checkbox" data-name="Hybrid Cat Eye Lashes" data-price="700" data-mins="75">
+      <div class="service-info">
+        <span class="service-name">Hybrid Cat Eye Lashes</span>
+        <span class="service-meta">KES 700 &bull; 75 mins</span>
+      </div>
+    </label>
+
+    <label class="service-card">
+      <input type="checkbox" data-name="Classic Wispy Lashes" data-price="600" data-mins="65">
+      <div class="service-info">
+        <span class="service-name">Classic Wispy Lashes</span>
+        <span class="service-meta">KES 600 &bull; 65 mins</span>
+      </div>
+    </label>
+
+    <label class="service-card">
+      <input type="checkbox" data-name="Hybrid Wispy Lashes" data-price="800" data-mins="80">
+      <div class="service-info">
+        <span class="service-name">Hybrid Wispy Lashes</span>
+        <span class="service-meta">KES 800 &bull; 80 mins</span>
+      </div>
+    </label>
